@@ -6,7 +6,7 @@ intents.messages = True
 intents.message_content = True
 
 
-TOKEN = 'replace with TOKEN'
+TOKEN = 'replace with TOKEN' #Delete token when uploading to GitHub
 
 # Prefix for commands
 bot = commands.Bot(command_prefix='!', intents=intents)
