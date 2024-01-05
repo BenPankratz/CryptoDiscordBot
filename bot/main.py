@@ -6,7 +6,7 @@ intents.messages = True
 intents.message_content = True
 
 
-TOKEN = 'MTE5Mjg4OTc0MDQ1ODk5NTc2NA.GWBCSm.KvdD_qaVkrn3Yy0sI-a0m2Vjb5T5rYpelPaAPw'
+TOKEN = 'replace with TOKEN'
 
 # Prefix for commands
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -29,6 +29,15 @@ async def beast(ctx):
 @bot.command(name='HowDoesDanLikeHisWomen')
 async def HowDoesDanLikeHisWomen(ctx):
     await ctx.send('Large!') 
+
+# Test Images
+@bot.command(name='product')
+async def product(ctx):
+    embed = discord.Embed(title="Product Name", description="This is a great product.", color=0x00ff00)
+    embed.add_field(name="Price", value="$9.99")
+    embed.set_image(url="https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Skibidi_toilet_screenshot.webp/237px-Skibidi_toilet_screenshot.webp.png")
+    await ctx.send(embed=embed)
+
 
 # Start the bot
 bot.run(TOKEN)
