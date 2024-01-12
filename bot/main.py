@@ -6,7 +6,7 @@ intents = discord.Intents.default()
 intents.messages = True
 intents.message_content = True
 
-TOKEN = 'MTE5Mjg4OTc0MDQ1ODk5NTc2NA.GfN6ZX.jlwYkBNiztrcJwoseEMAJvKOJjZougnLDH2KBU' #Delete token when uploading to GitHub
+TOKEN = '' #Delete token when uploading to GitHub
 
 API_KEY = 'CG-6Jo2ZVRrgQBFywfd3BVoEWKZ'
 
