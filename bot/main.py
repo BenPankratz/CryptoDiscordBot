@@ -62,7 +62,13 @@ def get_crypto_info(ticker):
 async def crypto(ctx, coin):
     info = get_crypto_info(coin)
     if info is not None:
-        await ctx.send(f"Crypto Data (Price, Market Cap, 24H Vol, 24H Change, Last Updated): {info}")
+        await ctx.send(
+            f"""
+            Crypto Data:\n
+            Price: ${info[0]}USD\nMarket Cap: ${info[1]}USD\n24 Hour Volume: ${info[2]}USD\n
+            24 Hour Change: {info[3]}%\nLast Updated: {info[4]}
+            """
+            )
     else:
         await ctx.send("Data not available for this ticker.")
 
