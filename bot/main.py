@@ -34,7 +34,7 @@ COIN_IDS = {
 def get_crypto_price(ticker):
     coin_id = COIN_IDS.get(ticker.lower())
     if not coin_id:
-        return None
+        coin_id = ticker
     
     url = 'https://api.coingecko.com/api/v3/simple/price'
     params = {  
