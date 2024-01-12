@@ -53,25 +53,50 @@ def get_crypto_market_cap(ticker):
     params = {
         'ids': coin_id,
         'vs_currencies': 'usd',
-        'include_market_cap': 'true'
+        'include_market_cap': 'true',
+        'include_24hr_vol' : 'true',
+        'include_24hr_change' : 'true',
+        'include_last_updated_at' : 'true'
     }
     response = requests.get(url, params = params)
     data = response.json()
     market_cap_key = f'{coin_id}_usd_market_cap'
     return data[coin_id]['usd_market_cap'] if market_cap_key in data[coin_id] else None
 
+def get_crypto_info(ticker):
+    coin_id = COIN_IDS.get(ticker.lower(),ticker) #returns the ticker as a default if not found
+
+    url = 'https://api.coingecko.com/api/v3/simple/price'
+    params = {
+        'ids': coin_id,
+        'vs_currencies': 'usd',
+        'include_market_cap': 'true',
+        'include_24hr_vol' : 'true',
+        'include_24hr_change' : 'true',
+        'include_last_updated_at' : 'true'
+    }
+    response = requests.get(url, params = params)
+    data = response.json()
+
+    if coin_id in data:
+        coin_data = data[coin_id]
+        return [
+            coin_data.get('usd', None),
+            coin_data.get('usd_market_cap', None),
+            coin_data.get('usd_24h_vol', None),
+            coin_data.get('usd_24h_change', None),
+            coin_data.get('last_updated_at', None)
+        ]
+    else:
+        return None
+
 @bot.command(name='crypto')
 async def crypto(ctx, coin):
-    price = get_crypto_price(coin.lower())
-    cap = get_crypto_market_cap(coin.lower())
-    if price is not None:
-        await ctx.send(f"The current price of {coin.upper()} is: ${price}")
+    info = get_crypto_info(coin)
+    if info is not None:
+        print(f"Crypto Data (Price, Market Cap, 24H Vol, 24H Change, Last Updated): {info}")
     else:
-        await ctx.send(f"Couldn't fetch price for {coin.upper()}. Please check the coin symbol.")
-    if cap is not None:
-        await ctx.send(f"The market cap of {coin.upper()} is: ${cap}")
-    else:
-        await ctx.send(f"Couldn't fetch market cap for {coin.upper()}. Please check the coin symbol.")
+        print("Data not available for this ticker.")
 
 
 @bot.command(name='beast')
