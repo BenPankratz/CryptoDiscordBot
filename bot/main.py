@@ -24,46 +24,14 @@ async def test(ctx):
     print("Test command was called")
     await ctx.send('Bot is up and running!')
 
-COIN_IDS = {
+def get_crypto_info(ticker):
+    COIN_IDS = {
     'btc': 'bitcoin',
     'eth': 'ethereum',
     'xrp': 'ripple',
     # Add more mappings as needed
 }
 
-def get_crypto_price(ticker):
-    coin_id = COIN_IDS.get(ticker.lower())
-    if not coin_id:
-        coin_id = ticker
-    
-    url = 'https://api.coingecko.com/api/v3/simple/price'
-    params = {  
-        'ids': coin_id,
-        'vs_currencies': 'usd'
-    }
-    response = requests.get(url, params = params)
-    data = response.json()
-    return data[coin_id]['usd'] if coin_id in data else None
-
-def get_crypto_market_cap(ticker):
-    coin_id = COIN_IDS.get(ticker.lower())
-    if not coin_id:
-        coin_id = ticker
-    url = 'https://api.coingecko.com/api/v3/simple/price'
-    params = {
-        'ids': coin_id,
-        'vs_currencies': 'usd',
-        'include_market_cap': 'true',
-        'include_24hr_vol' : 'true',
-        'include_24hr_change' : 'true',
-        'include_last_updated_at' : 'true'
-    }
-    response = requests.get(url, params = params)
-    data = response.json()
-    market_cap_key = f'{coin_id}_usd_market_cap'
-    return data[coin_id]['usd_market_cap'] if market_cap_key in data[coin_id] else None
-
-def get_crypto_info(ticker):
     coin_id = COIN_IDS.get(ticker.lower(),ticker) #returns the ticker as a default if not found
 
     url = 'https://api.coingecko.com/api/v3/simple/price'
@@ -94,10 +62,9 @@ def get_crypto_info(ticker):
 async def crypto(ctx, coin):
     info = get_crypto_info(coin)
     if info is not None:
-        print(f"Crypto Data (Price, Market Cap, 24H Vol, 24H Change, Last Updated): {info}")
+        await ctx.send(f"Crypto Data (Price, Market Cap, 24H Vol, 24H Change, Last Updated): {info}")
     else:
-        print("Data not available for this ticker.")
-
+        await ctx.send("Data not available for this ticker.")
 
 @bot.command(name='beast')
 async def beast(ctx):
