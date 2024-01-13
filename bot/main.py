@@ -27,7 +27,7 @@ async def test(ctx):
 def get_crypto_info(ticker):
     coin_id = COIN_IDS.get(ticker.lower(), ticker)  # returns the ticker as a default if not found
     url = 'https://api.coingecko.com/api/v3/simple/price'
-    params = {
+    params = { #what information do we need from coingecko api?
         'ids': coin_id,
         'vs_currencies': 'usd',
         'include_market_cap': 'true',
@@ -54,14 +54,14 @@ def get_crypto_info(ticker):
 
 @bot.command(name='crypto')
 async def crypto(ctx, coin):
-    info = get_crypto_info(coin)
+    info = get_crypto_info(coin) #Calls get_crypto_info, which returns a list of information
     if info is not None:
         coin_name = coin.capitalize()  # Capitalize the first letter
-        # Format numbers with two decimal places for price and 24-hour change
-        price = f"${info[0]:,.2f}"
+
+        price = f"${info[0]:,.2f}" #Format specifiers
         market_cap = f"${int(info[1]):,}"
         volume_24h = f"${int(info[2]):,}"
-        change_24h = f"{info[3]:.2f}%"  # Includes two decimal places
+        change_24h = f"{info[3]:.2f}%"
 
         await ctx.send(
             f"{coin_name} Data:\n\n"
@@ -71,7 +71,7 @@ async def crypto(ctx, coin):
             f"24 Hour Change: {change_24h}\n"
             f"Last Updated: {info[4]}"
         )
-    else:
+    else: #Data was not found for this ticker
         await ctx.send("Data not available for this ticker.")
 
 
