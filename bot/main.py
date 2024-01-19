@@ -14,6 +14,10 @@ TOKEN = '' #Delete token when uploading to GitHub'
 
 bot = commands.Bot(command_prefix='!', intents=intents)#Prefix for commands
 
+#test test 
+#test test
+#test test
+#test test
 
 @bot.event  #Intitialize bot
 async def on_ready():
