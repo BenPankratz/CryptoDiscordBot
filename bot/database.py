@@ -1,6 +1,6 @@
 import sqlite3
 
-def init_db():
+def initialize_database():
     conn = sqlite3.connect('my_database.db')
     cursor = conn.cursor()
     for statement in CREATE_TABLE_STATEMENTS:
