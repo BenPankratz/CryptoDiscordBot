@@ -113,11 +113,11 @@ async def chart(ctx, coin):
 
 @bot.command(name='add')
 async def add(ctx, coin):
-    username = ctx.author.name # Get user name
+    username = ctx.author.name  # Get user name
     coin_id = COIN_IDS.get(coin.lower(), coin)  # Convert to coin ID
-    #Check if user is in database. Yes, continue. No, add user to database
-    DB.insert_coin(username, coin_id); #insert data through database.py
-    await ctx.send(f"added {coin}")
+    DB.insert_coin(username, coin_id)
+    await ctx.send(f"Added {coin} for {username}")
+
 
 @bot.command(name='beast')
 async def beast(ctx):
