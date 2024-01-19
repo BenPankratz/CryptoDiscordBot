@@ -1,5 +1,4 @@
 import discord
-from .database import DB
 from discord.ext import commands
 import requests
 import datetime 
@@ -12,7 +11,7 @@ intents.messages = True
 intents.message_content = True
 
 TOKEN = '' #Delete token when uploading to GitHub'
-#test
+
 bot = commands.Bot(command_prefix='!', intents=intents)#Prefix for commands
 
 #test test 
@@ -111,13 +110,6 @@ async def chart(ctx, coin):
     chart_image = get_crypto_chart(coin_id)
     await ctx.send(file=discord.File(chart_image, f'{coin_id}_chart.png'))
 
-@bot.command(name='add')
-async def add(ctx, coin):
-    username = ctx.author.name # Get user name
-    coin_id = COIN_IDS.get(coin.lower(), coin)  # Convert to coin ID
-    #Check if user is in database. Yes, continue. No, add user to database
-    DB.insert_coin(username, coin_id); #insert data through database.py
-    await ctx.send(f"added {coin}")
 
 @bot.command(name='beast')
 async def beast(ctx):
