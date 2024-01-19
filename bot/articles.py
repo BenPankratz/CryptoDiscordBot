@@ -22,9 +22,8 @@ def get_crypto_news(crypto_name):
             title = article.find('h4').get_text().strip()  # Adjust the tag and class based on actual structure
             link = article.find('a')['href']
             news_list.append({'title': title, 'link': link})
-
         return news_list
-
+    
     except requests.HTTPError as http_err:
         print(f'HTTP error occurred: {http_err}')
     except Exception as err:

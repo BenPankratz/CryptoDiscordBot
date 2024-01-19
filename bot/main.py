@@ -10,10 +10,14 @@ intents = discord.Intents.default()
 intents.messages = True
 intents.message_content = True
 
-TOKEN = '' #Delete token when uploading to GitHub'
+TOKEN = 'MTE5Mjg4OTc0MDQ1ODk5NTc2NA.GN0Aqn.9y3JhNnDnQDSexcJDvPEgX06fXqgmuvAYw0gJs' #Delete token when uploading to GitHub'
 
 bot = commands.Bot(command_prefix='!', intents=intents)#Prefix for commands
 
+#test test 
+#test test
+#test test
+#test test
 
 @bot.event  #Intitialize bot
 async def on_ready():
