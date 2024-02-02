@@ -1,5 +1,5 @@
 import discord
-from .database import DB
+from database import initialize_database, insert_user, insert_coin, get_user_coins, query_data
 from discord.ext import commands
 import requests
 import datetime 
@@ -11,9 +11,10 @@ intents = discord.Intents.default()
 intents.messages = True
 intents.message_content = True
 
-TOKEN = '' #Delete token when uploading to GitHub'
+TOKEN = 'MTE5Mjg4OTc0MDQ1ODk5NTc2NA.GRkobG.pF-CKHA1I_tU5HXqQkzBDr_fCjqsq2WsMnrHs4'
 #test
 bot = commands.Bot(command_prefix='!', intents=intents)#Prefix for commands
+initialize_database()
 
 #test test 
 #test test
@@ -114,11 +115,24 @@ async def chart(ctx, coin):
 @bot.command(name='add')
 async def add(ctx, coin):
     username = ctx.author.name  # Get user name
-    coin_id = COIN_IDS.get(coin.lower(), coin)  # Convert to coin ID
-    DB.insert_coin(username, coin_id)
+    insert_coin(username, coin)
     await ctx.send(f"Added {coin} for {username}")
+    query_data()
 
 
+@bot.command(name='report')
+async def report(ctx):
+    coins = get_user_coins(ctx.author.name)
+    if(len(coins) == 0):
+        await ctx.send("you have no coins saved. Use '!add *coin name*' to add a coin.")
+        return 
+    await ctx.send("Here's a report on your current crypo coins")
+    message = ""
+    for coin in coins:
+        message += coin + ", "
+    await ctx.send(message)
+
+        
 @bot.command(name='beast')
 async def beast(ctx):
     await ctx.send('You sexy beast!')
@@ -126,6 +140,7 @@ async def beast(ctx):
 @bot.command(name='HowDoesDanLikeHisWomen')
 async def HowDoesDanLikeHisWomen(ctx):
     await ctx.send('Large!')
+
 
 # Start the bot
 bot.run(TOKEN)
