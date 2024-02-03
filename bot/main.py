@@ -11,7 +11,7 @@ intents = discord.Intents.default()
 intents.messages = True
 intents.message_content = True
 
-TOKEN = 'MTE5Mjg4OTc0MDQ1ODk5NTc2NA.GA3jq2.-b88Yv7Bo7NFMPKKeyjgsUt07wBu98pGxAnaV4'
+TOKEN = ''
 #test
 bot = commands.Bot(command_prefix='!', intents=intents)#Prefix for commands
 initialize_database()
