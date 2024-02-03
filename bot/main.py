@@ -11,7 +11,7 @@ intents = discord.Intents.default()
 intents.messages = True
 intents.message_content = True
 
-TOKEN = 'MTE5Mjg4OTc0MDQ1ODk5NTc2NA.GRkobG.pF-CKHA1I_tU5HXqQkzBDr_fCjqsq2WsMnrHs4'
+TOKEN = 'MTE5Mjg4OTc0MDQ1ODk5NTc2NA.GA3jq2.-b88Yv7Bo7NFMPKKeyjgsUt07wBu98pGxAnaV4'
 #test
 bot = commands.Bot(command_prefix='!', intents=intents)#Prefix for commands
 initialize_database()
@@ -114,7 +114,7 @@ async def chart(ctx, coin):
 
 @bot.command(name='add')
 async def add(ctx, coin):
-    username = ctx.author.name  # Get user name
+    username = ctx.author.name
     insert_coin(username, coin)
     await ctx.send(f"Added {coin} for {username}")
     query_data()
@@ -129,8 +129,25 @@ async def report(ctx):
     await ctx.send("Here's a report on your current crypo coins")
     message = ""
     for coin in coins:
-        message += coin + ", "
-    await ctx.send(message)
+        info = get_crypto_info(coin) #Calls get_crypto_info, which returns a list of information
+        if info is not None:
+            coin_name = coin.capitalize()  # Capitalize the first letter
+
+            price = f"${info[0]:,.2f}" #Format specifiers
+            market_cap = f"${int(info[1]):,}"
+            volume_24h = f"${int(info[2]):,}"
+            change_24h = f"{info[3]:.2f}%"
+
+            await ctx.send(
+                f"{coin_name} Data:\n\n"
+                f"Price: {price}\n"
+                f"Market Cap: {market_cap}\n"
+                f"24 Hour Volume: {volume_24h}\n"
+                f"24 Hour Change: {change_24h}\n"
+                f"Last Updated: {info[4]}\n\n"
+            )
+        else: #Data was not found for this ticker
+            await ctx.send("Data not available for this ticker.")
 
         
 @bot.command(name='beast')

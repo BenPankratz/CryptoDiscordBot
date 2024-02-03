@@ -12,7 +12,7 @@ def initialize_database():
 
     # Create the coins table
     cursor.execute('''CREATE TABLE IF NOT EXISTS coins
-                    (user_id INTEGER, coin INTEGER,
+                    (user_id INTEGER, coin TEXT,
                     FOREIGN KEY (user_id) REFERENCES users(id))''')
 
     conn.commit()
@@ -32,9 +32,17 @@ def insert_user(username):
 
     return user_id
 
-def insert_coin(user_id, coin):
+def insert_coin(username, coin):
     conn = sqlite3.connect('my_database.db')
     cursor = conn.cursor()
+
+    # Check if the user exists, if not, add them to the database
+    user_id = cursor.execute("SELECT id FROM users WHERE username = ?", (username,)).fetchone()
+    if not user_id:
+        cursor.execute("INSERT INTO users (username) VALUES (?)", (username,))
+        user_id = cursor.lastrowid
+    else:
+        user_id = user_id[0]
 
     # Insert coin for a user
     cursor.execute("INSERT INTO coins (user_id, coin) VALUES (?, ?)", (user_id, coin))
