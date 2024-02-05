@@ -23,7 +23,6 @@ def insert_user(username):
     conn = sqlite3.connect('my_database.db')
     cursor = conn.cursor()
 
-    # Insert new user
     cursor.execute("INSERT INTO users (username) VALUES (?)", (username,))
     user_id = cursor.lastrowid
 
@@ -59,7 +58,6 @@ def get_user_coins(username):
     user_id = cursor.fetchone()
 
     if user_id:
-        # Retrieve coins associated with the user
         cursor.execute("SELECT coin FROM coins WHERE user_id = ?", (user_id[0],))
         coins = [row[0] for row in cursor.fetchall()]
         conn.close()
@@ -81,7 +79,7 @@ def query_data():
     conn = sqlite3.connect('my_database.db')
     cursor = conn.cursor()
 
-    # Query data from the database
+    # get data from the database
     cursor.execute("SELECT u.username, c.coin FROM users u LEFT JOIN coins c ON u.id = c.user_id")
     rows = cursor.fetchall()
 

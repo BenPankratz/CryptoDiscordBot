@@ -12,14 +12,8 @@ intents.messages = True
 intents.message_content = True
 
 TOKEN = ''
-#test
 bot = commands.Bot(command_prefix='!', intents=intents)#Prefix for commands
 initialize_database()
-
-#test test 
-#test test
-#test test
-#test test
 
 @bot.event  #Intitialize bot
 async def on_ready():
@@ -60,11 +54,11 @@ def get_crypto_info(ticker):
 
 @bot.command(name='crypto')
 async def crypto(ctx, coin):
-    info = get_crypto_info(coin) #Calls get_crypto_info, which returns a list of information
+    info = get_crypto_info(coin)
     if info is not None:
-        coin_name = coin.capitalize()  # Capitalize the first letter
+        coin_name = coin.capitalize()  
 
-        price = f"${info[0]:,.2f}" #Format specifiers
+        price = f"${info[0]:,.2f}" 
         market_cap = f"${int(info[1]):,}"
         volume_24h = f"${int(info[2]):,}"
         change_24h = f"{info[3]:.2f}%"
@@ -129,11 +123,11 @@ async def report(ctx):
     await ctx.send("Here's a report on your current crypo coins")
     message = ""
     for coin in coins:
-        info = get_crypto_info(coin) #Calls get_crypto_info, which returns a list of information
+        info = get_crypto_info(coin) 
         if info is not None:
-            coin_name = coin.capitalize()  # Capitalize the first letter
+            coin_name = coin.capitalize() 
 
-            price = f"${info[0]:,.2f}" #Format specifiers
+            price = f"${info[0]:,.2f}"
             market_cap = f"${int(info[1]):,}"
             volume_24h = f"${int(info[2]):,}"
             change_24h = f"{info[3]:.2f}%"
@@ -148,15 +142,6 @@ async def report(ctx):
             )
         else: #Data was not found for this ticker
             await ctx.send("Data not available for this ticker.")
-
-        
-@bot.command(name='beast')
-async def beast(ctx):
-    await ctx.send('You sexy beast!')
-
-@bot.command(name='HowDoesDanLikeHisWomen')
-async def HowDoesDanLikeHisWomen(ctx):
-    await ctx.send('Large!')
 
 
 # Start the bot
